@@ -4,6 +4,10 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpContentCompressor;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.springframework.stereotype.Component;
@@ -23,6 +27,10 @@ public class Server {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline p = socketChannel.pipeline();
+                            p.addLast(new HttpRequestDecoder());
+                            p.addLast(new HttpObjectAggregator(65536));
+                            p.addLast(new HttpResponseEncoder());
+                            p.addLast(new HttpContentCompressor());
                             p.addLast(new LoggingHandler(LogLevel.INFO));
                             p.addLast(new Handler());
                         }
