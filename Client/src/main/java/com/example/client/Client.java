@@ -30,7 +30,7 @@ public class Client {
 
                 }
             });
-            ChannelFuture f = b.connect("127.0.0.1", 8888).sync();
+            ChannelFuture f = b.connect("127.0.0.1", 7777).sync();
             f.channel().closeFuture().sync();
         } catch (InterruptedException ex){
             ex.printStackTrace();

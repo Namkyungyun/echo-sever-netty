@@ -6,11 +6,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
-import java.net.http.HttpHeaders;
+
 import java.net.http.HttpRequest;
-import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.Scanner;
 
 public class Handler extends ChannelInboundHandlerAdapter {
@@ -51,7 +49,7 @@ public class Handler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
-        ctx.close();
+        ctx.flush();
     }
 
     @Override
