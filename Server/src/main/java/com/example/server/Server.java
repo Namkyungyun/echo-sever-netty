@@ -22,7 +22,7 @@ public class Server {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childOption(ChannelOption.SO_LINGER, 0)
+                    .childOption(ChannelOption.SO_LINGER, 3)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
