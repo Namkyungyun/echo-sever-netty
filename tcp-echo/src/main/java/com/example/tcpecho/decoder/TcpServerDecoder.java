@@ -1,30 +1,31 @@
 package com.example.tcpecho.decoder;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class TcpServerDecoder extends MessageToMessageDecoder {
+public class TcpServerDecoder extends ByteToMessageDecoder {
 
-    private String DATA_END = "end";
-
+    private int DATA_LENGTH = 512;
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, Object o, List list) throws Exception {
-        System.out.println("o==>" + o);
-        ByteBuf
-        if(o.toString() == DATA_END) {
+    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
 
-            list.add(o);
-        } else {
+        if (in.readableBytes() < DATA_LENGTH) {
             return;
         }
+
+        out.add(in.readBytes(DATA_LENGTH));
+
     }
 }
